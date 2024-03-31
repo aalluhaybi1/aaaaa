@@ -2,39 +2,31 @@ const express = require('express');
 const path = require('path');
 
 const app = express();
+const port = 3000;
 
-// Set the views directory
+// Set the views directory and view engine
 app.set('views', path.join(__dirname, 'templates'));
-
-// Set the view engine
 app.set('view engine', 'ejs');
+
+// Serve static files from the public directory
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Define routes
 app.get('/', (req, res) => {
-    // Check file paths and verify file extensions
-    // Make sure that the path to index.ejs is correct
-    // and that this file exists in the specified location
-    res.render('index');
-});
-
-app.get('/tp', (req, res) => {
-    // Check file paths and verify file extensions
-    // Make sure that the path to tp.ejs is correct
-    // and that this file exists in the specified location
-    res.render('tp');
-});
-
-app.get('/hous', (req, res) => {
-    // Check file paths and verify file extensions
-    // Make sure that the path to hous.ejs is correct
-    // and that this file exists in the specified location
-    res.render('hous');
+    // Define the variables to be passed to the template
+    const data = {
+        phoneNumber: '123-456-7890', // Example phone number
+        email: 'example@example.com', // Example email
+        address: '123 Example St, City, Country', // Example address
+        supportEmail: 'support@example.com', // Example support email
+        phoneNo: '987-654-3210' // Example phone number for hous.ejs
+    };
+    res.render('index', data);
 });
 
 // Start the server
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+app.listen(port, () => {
+    console.log(`Server is running on http://localhost:${port}`);
 });
 
 
