@@ -136,11 +136,14 @@ app.post('/review', async (req, res) => {
     // Do something with the form data, such as saving it to a database
     await insertName(formData);
     // After processing the form data, redirect to a success page
-    res.redirect('/review');
+    res.redirect('/success');
   } catch (error) {
     console.error('Error processing form data:', error);
     res.status(500).send('Internal Server Error');
   }
+});
+app.get('/success', (req, res) => {
+  res.render('success'); // Render the success page
 });
 
 // Helper function to insert name data into the database
@@ -149,10 +152,10 @@ async function insertName(data) {
   await collection.insertOne(data);
 }
 
-// async function insertName(data) {
-//   const collection = client.db('aaaa').collection('aaaa');
-//   await collection.insertOne(data);
-// }
+async function insertName(data) {
+  const collection = client.db('aaaa').collection('aaaa');
+  await collection.insertOne(data);
+}
 
 async function getNameById(id) {
   const collection = client.db('aaaa').collection('aaaa');
