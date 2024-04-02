@@ -20,10 +20,19 @@
             <li>Apartment Type: <%= data.apartmentTypeIndividuals %></li>
             <!-- Add more data fields as needed -->
         </ul>
+        <!-- Add Update and Delete buttons for each record -->
+        <form action="/updateName" method="get">
+            <input type="hidden" name="devId" value="<%= data._id %>">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <button type="submit">Update</button>
+        </form>
+        <form action="/deleteName" method="post">
+            <input type="hidden" name="devId" value="<%= data._id %>">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <button type="submit">Delete</button>
+        </form>
     <% }); %>
-    <!-- Add buttons or links to go back or proceed with further actions -->
+    <!-- Add button to go back to the home page -->
     <button onclick="window.location.href = '/'">Back to Home</button>
-
-    <!-- You can add more buttons or links for further actions -->
 </body>
 </html>
