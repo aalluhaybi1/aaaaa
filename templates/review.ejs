@@ -7,17 +7,68 @@
 </head>
 <body>
     <h1>Review Page</h1>
-    <!-- You can customize the content of the review page here -->
-    <p>This is the review page. You can display the submitted information here for review.</p>
-    <!-- Example: Displaying submitted form data -->
-    <ul>
-        <li>First Name: <%= fname %></li>
-        <li>Last Name: <%= lname %></li>
-        <li>Phone Number: <%= phone %></li>
-        <li>Email: <%= email %></li>
-        <li>Apartment Type: <%= apartmentTypeIndividuals %></li>
-        <!-- Add more data fields as needed -->
-    </ul>
+    <section class="py-5" style="background-color: #f8f9fa;">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-9"></div>
+            <div class="container-fluid">
+              <!-- FILEPATH: /C:/Users/mrbas/OneDrive/Desktop/repos/aaaaa/templates/hous.ejs -->
+              <div class="card m-4 border-info text-black bg-white">
+                <h4 class="card-title">Library Records: <%= nameData.length %></h4>
+                <div class="card-body">
+                  <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th scope="col">First Name</th>
+                        <th scope="col">Last Name</th>
+                        <th scope="col">Phone</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Apartment Type</th>
+                        
+                        <th scope="col">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% for (var i = 0; i < nameData.length; i++) { %>
+                      <tr>
+                        <td>
+                          <form id="updateForm<%= i %>" method="POST" action="/updateName">
+                            <input type="hidden" name="devId" value="<%= nameData[i]._id %>">
+                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                            <input type="text" name="fname" value="<%= nameData[i].fname %>">
+                        </td>
+                        <td>
+                          <input type="text" name="lname" value="<%= nameData[i].lname %>">
+                        </td>
+                        <td>
+                          <input type="text" name="phone" value="<%= nameData[i].phone %>">
+                        </td>
+                        <td>
+                          <input type="text" name="email" value="<%= nameData[i].email %>">
+                        </td>
+                        <td>
+                          <input type="text" name="apartmentTypeIndividuals" value="<%= nameData[i].apartmentTypeIndividuals %>">
+                        </td>
+                        <td>
+                          <button class="btn btn-secondary" type="submit" form="updateForm<%= i %>">Update Name Info</button>
+                          </form>
+                          <form method="POST" action="/deleteName">
+                            <input type="hidden" name="devId" value="<%= nameData[i]._id %>">
+                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                            <button class="btn btn-danger" type="submit" style="background-color: rgba(0, 195, 255, 0.342);">Delete Name Info</button>
+                          </form>
+                        </td>
+                      </tr>
+                      <% } %>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
     <!-- Add buttons or links to go back or proceed with further actions -->
     <a href="/">Back to Home</a>
     <!-- You can add more buttons or links for further actions -->
