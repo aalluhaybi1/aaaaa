@@ -133,6 +133,26 @@ app.get('/review', async (req, res) => {
     res.status(500).send('Internal Server Error');
   }
 });
+app.post('/review', async (req, res) => {
+  try {
+    // Process the submitted form data here if needed
+    // Then render the review.ejs template with the processed data
+    res.render('review', { /* Data to pass to the template */ });
+  } catch (error) {
+    console.error('Error processing form data:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+app.post('/addName', async (req, res) => {
+  try {
+    // Process the submitted form data here
+    // Then redirect to the review page
+    res.redirect('/review');
+  } catch (error) {
+    console.error('Error adding name:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
 
 
 // Helper functions
