@@ -114,6 +114,41 @@ app.post('/deleteName', async (req, res) => {
     res.status(500).send('Internal Server Error');
   }
 });
+// Login route
+app.get('/login', (req, res) => {
+  res.render('login', { pageTitle: 'Login', csrfToken: req.csrfToken(), errorMessage: null });
+});
+
+app.post('/login', async (req, res) => {
+  const { username, password } = req.body;
+  const collection = client.db('bb').collection('bb');
+  const user = await collection.findOne({ username });
+
+  if (!user || !(await bcrypt.compare(password, user.password))) {
+    res.render('login', { pageTitle: 'Login', csrfToken: req.csrfToken(), errorMessage: 'Invalid username or password' });
+  } else {
+    res.redirect('register');
+  }
+});
+
+// Register route
+app.get('/register', (req, res) => {
+  res.render('register', { pageTitle: 'Register', csrfToken: req.csrfToken(), successMessage: null, errorMessage: null });
+});
+
+app.post('/register', async (req, res) => {
+  const { username, password } = req.body;
+  const collection = client.db('bb').collection('bb');
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  try {
+    await collection.insertOne({ username, password: hashedPassword });
+    res.render('register', { pageTitle: 'Register', csrfToken: req.csrfToken(), successMessage: 'Registration successful!', errorMessage: null });
+  } catch (error) {
+    res.render('register', { pageTitle: 'Register', csrfToken: req.csrfToken(), successMessage: null, errorMessage: 'Failed to register. Please try again.' });
+  }
+});
+
 
 // review page
 app.get('/review', async (req, res) => {
