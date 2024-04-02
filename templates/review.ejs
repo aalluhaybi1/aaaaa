@@ -11,15 +11,16 @@
     <!-- You can customize the content of the review page here -->
     <p>This is the review page. You can display the submitted information here for review.</p>
     <!-- Example: Displaying submitted form data -->
-    <ul>
-        <li>First Name: <%= fname %></li>
-        <li>Last Name: <%= lname %></li>
-        <li>Phone Number: <%= phone %></li>
-        <li>Email: <%= email %></li>
-        <li>Apartment Type: <%= apartmentTypeIndividuals %></li>
-        <!-- Add more data fields as needed -->
-    </ul>
-    <% for (var i = 0; i < nameData.length; i++) { %>
+    <% nameData.forEach(data => { %>
+        <ul>
+            <li>First Name: <%= data.fname %></li>
+            <li>Last Name: <%= data.lname %></li>
+            <li>Phone Number: <%= data.phone %></li>
+            <li>Email: <%= data.email %></li>
+            <li>Apartment Type: <%= data.apartmentTypeIndividuals %></li>
+            <!-- Add more data fields as needed -->
+        </ul>
+    <% }); %>
     <!-- Add buttons or links to go back or proceed with further actions -->
     <a href="/">Back to Home</a>
     <!-- You can add more buttons or links for further actions -->

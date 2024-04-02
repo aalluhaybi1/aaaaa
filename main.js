@@ -116,16 +116,11 @@ app.post('/deleteName', async (req, res) => {
 });
 
 // review page
-// review page
 app.get('/review', async (req, res) => {
   try {
     const nameData = await getNameData(); // Fetch the data needed for the review
     res.render('review', { 
-      fname: nameData.fname, // Assuming nameData is an object with these properties
-      lname: nameData.lname,
-      phone: nameData.phone,
-      email: nameData.email,
-      apartmentTypeIndividuals: nameData.apartmentTypeIndividuals,
+      nameData: nameData, // Pass the array of data to the template
       csrfToken: req.csrfToken() 
     });
   } catch (error) {
@@ -143,26 +138,6 @@ app.post('/review', async (req, res) => {
     res.status(500).send('Internal Server Error');
   }
 });
-app.post('/addName', async (req, res) => {
-  try {
-    // Process the submitted form data here
-    // Then redirect to the review page
-    res.redirect('/review');
-  } catch (error) {
-    console.error('Error adding name:', error);
-    res.status(500).send('Internal Server Error');
-  }
-});
-app.get('/updateName', async (req, res) => {
-  try {
-    const nameToUpdate = await getNameById(req.query.devId);
-    res.render('update', { pageTitle: 'Update Name Info', nameData: nameToUpdate, csrfToken: req.csrfToken() });
-  } catch (error) {
-    console.error('Error rendering update page:', error);
-    res.status(500).send('Internal Server Error');
-  }
-});
-
 
 // Helper functions
 async function getNameData() {
