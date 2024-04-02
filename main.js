@@ -130,28 +130,28 @@ app.post('/deleteName', async (req, res) => {
 
 // Helper functions
 async function getNameData() {
-  const collection = client.db('quebec-database').collection('quebec-collection');
+  const collection = client.db('aaaa').collection('aaaa');
   return await collection.find().toArray();
 }
 
 async function insertName(data) {
-  const collection = client.db('quebec-database').collection('quebec-collection');
+  const collection = client.db('aaaa').collection('aaaa');
   await collection.insertOne(data);
 }
 
 async function getNameById(id) {
-  const collection = client.db('quebec-database').collection('quebec-collection');
+  const collection = client.db('aaaa').collection('aaaa');
   return await collection.findOne({ _id: new ObjectId(id) });
 }
 
 async function updateName(data) {
   const { devId, ...update } = data;
-  const collection = client.db('quebec-database').collection('quebec-collection');
+  const collection = client.db('aaaa').collection('aaaa');
   await collection.updateOne({ _id: new ObjectId(devId) }, { $set: update });
 }
 
 async function deleteName(id) {
-  const collection = client.db('quebec-database').collection('quebec-collection');
+  const collection = client.db('aaaa').collection('aaaa');
   await collection.deleteOne({ _id: new ObjectId(id) });
 }
 
