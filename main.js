@@ -116,15 +116,24 @@ app.post('/deleteName', async (req, res) => {
 });
 
 // review page
+// review page
 app.get('/review', async (req, res) => {
   try {
-    const nameData = await getNameData();
-    res.render('review', { nameData, csrfToken: req.csrfToken() });
+    const nameData = await getNameData(); // Fetch the data needed for the review
+    res.render('review', { 
+      fname: nameData.fname, // Assuming nameData is an object with these properties
+      lname: nameData.lname,
+      phone: nameData.phone,
+      email: nameData.email,
+      apartmentTypeIndividuals: nameData.apartmentTypeIndividuals,
+      csrfToken: req.csrfToken() 
+    });
   } catch (error) {
     console.error('Error rendering review page:', error);
     res.status(500).send('Internal Server Error');
   }
 });
+
 
 // Helper functions
 async function getNameData() {
