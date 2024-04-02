@@ -66,11 +66,11 @@ app.get('/tp', (req, res) => {
 
 app.get('/review', (req, res) => {
     const data = {
-        phoneNumber: '123-456-7890', // Example phone number
-        email: 'example@example.com', // Example email
-        address: '123 Example St, City, Country', // Example address
-        supportEmail: 'support@example.com', // Example support email
-        phoneNo: '987-654-3210' // Example phone number for review.ejs
+        // phoneNumber: '123-456-7890', // Example phone number
+        // email: 'example@example.com', // Example email
+        // address: '123 Example St, City, Country', // Example address
+        // supportEmail: 'support@example.com', // Example support email
+        // phoneNo: '987-654-3210' // Example phone number for review.ejs
     };
     res.render('review', data); // Now 'data' is defined and can be passed to the template
 });
