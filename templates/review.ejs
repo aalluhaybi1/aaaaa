@@ -7,7 +7,7 @@
 </head>
 <body>
     <h1>Review Page</h1>
-    
+    <h2 class="card-title">Library Records: <%= nameData.length %></h2>
     <!-- You can customize the content of the review page here -->
     <p>This is the review page. You can display the submitted information here for review.</p>
     <!-- Example: Displaying submitted form data -->
@@ -19,6 +19,7 @@
         <li>Apartment Type: <%= apartmentTypeIndividuals %></li>
         <!-- Add more data fields as needed -->
     </ul>
+    <% for (var i = 0; i < nameData.length; i++) { %>
     <!-- Add buttons or links to go back or proceed with further actions -->
     <a href="/">Back to Home</a>
     <!-- You can add more buttons or links for further actions -->

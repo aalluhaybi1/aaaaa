@@ -153,6 +153,15 @@ app.post('/addName', async (req, res) => {
     res.status(500).send('Internal Server Error');
   }
 });
+app.get('/updateName', async (req, res) => {
+  try {
+    const nameToUpdate = await getNameById(req.query.devId);
+    res.render('update', { pageTitle: 'Update Name Info', nameData: nameToUpdate, csrfToken: req.csrfToken() });
+  } catch (error) {
+    console.error('Error rendering update page:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
 
 
 // Helper functions
