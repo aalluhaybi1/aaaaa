@@ -88,7 +88,7 @@ app.post('/addName', async (req, res) => {
 app.get('/updateName', async (req, res) => {
   try {
     const nameToUpdate = await getNameById(req.query.devId);
-    res.render('update', { pageTitle: 'Update Name Info', nameData: nameToUpdate, csrfToken: req.csrfToken() });
+    res.render('/review', { pageTitle: 'Update Name Info', nameData: nameToUpdate, csrfToken: req.csrfToken() });
   } catch (error) {
     console.error('Error rendering update page:', error);
     res.status(500).send('Internal Server Error');
@@ -98,7 +98,7 @@ app.get('/updateName', async (req, res) => {
 app.post('/updateName', async (req, res) => {
   try {
     await updateName(req.body);
-    res.redirect('/');
+    res.redirect('/review');
   } catch (error) {
     console.error('Error updating name:', error);
     res.status(500).send('Internal Server Error');
@@ -108,7 +108,7 @@ app.post('/updateName', async (req, res) => {
 app.post('/deleteName', async (req, res) => {
   try {
     await deleteName(req.body.devId);
-    res.redirect('/');
+    res.redirect('/review');
   } catch (error) {
     console.error('Error deleting name:', error);
     res.status(500).send('Internal Server Error');
