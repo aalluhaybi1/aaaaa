@@ -133,16 +133,18 @@ app.get('/review', async (req, res) => {
     res.status(500).send('Internal Server Error');
   }
 });
-app.post('/review', async (req, res) => {
-  try {
-    // Process the submitted form data here if needed
-    // Then render the review.ejs template with the processed data
-    res.render('review', { /* Data to pass to the template */ });
-  } catch (error) {
-    console.error('Error processing form data:', error);
-    res.status(500).send('Internal Server Error');
-  }
+// Define route handler for POST requests to /review
+app.post('/review', (req, res) => {
+  // Process the form data here
+  // For example, you can access the form fields using req.body
+  const { fname, lname, phone, email, noteFamily, apartmentTypeIndividuals } = req.body;
+  
+  // You can then do something with the form data, such as saving it to a database
+  
+  // After processing the form data, you can redirect the user to another page
+  res.redirect('/success'); // Redirect to a success page
 });
+
 app.post('/addName', async (req, res) => {
   try {
     // Process the submitted form data here
