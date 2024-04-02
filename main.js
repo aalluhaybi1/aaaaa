@@ -119,37 +119,46 @@ app.post('/deleteName', async (req, res) => {
 // review page
 app.get('/review', async (req, res) => {
   try {
-    const nameData = await getNameData();
-    res.render('review', { nameData, csrfToken: req.csrfToken() });
+    const nameData = await getNameData(); // Fetch the data needed for the review
+    res.render('review', { 
+      fname: nameData.fname, // Assuming nameData is an object with these properties
+      lname: nameData.lname,
+      phone: nameData.phone,
+      email: nameData.email,
+      apartmentTypeIndividuals: nameData.apartmentTypeIndividuals,
+      csrfToken: req.csrfToken() 
+    });
   } catch (error) {
     console.error('Error rendering review page:', error);
     res.status(500).send('Internal Server Error');
   }
 });
-
-// Define route handler for POST requests to /review
 app.post('/review', async (req, res) => {
   try {
-    // Process the form data here
-    // For example, you can access the form fields using req.body
-    const formData = req.body;
-    // Do something with the form data, such as saving it to a database
-    await insertName(formData);
-    // After processing the form data, redirect to a success page
-    res.redirect('/success');
+    // Process the submitted form data here if needed
+    // Then render the review.ejs template with the processed data
+    res.render('review', { /* Data to pass to the template */ });
   } catch (error) {
     console.error('Error processing form data:', error);
     res.status(500).send('Internal Server Error');
   }
 });
-app.get('/success', (req, res) => {
-  res.render('success'); // Render the success page
+app.post('/addName', async (req, res) => {
+  try {
+    // Process the submitted form data here
+    // Then redirect to the review page
+    res.redirect('/review');
+  } catch (error) {
+    console.error('Error adding name:', error);
+    res.status(500).send('Internal Server Error');
+  }
 });
 
-// Helper function to insert name data into the database
-async function insertName(data) {
+
+// Helper functions
+async function getNameData() {
   const collection = client.db('aaaa').collection('aaaa');
-  await collection.insertOne(data);
+  return await collection.find().toArray();
 }
 
 async function insertName(data) {
