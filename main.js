@@ -6,6 +6,8 @@ const csrf = require('csurf');
 const cookieParser = require('cookie-parser');
 require('dotenv').config();
 
+
+
 const app = express();
 const port = process.env.PORT || 5500;
 
@@ -91,6 +93,7 @@ app.get('/fh', async (req, res) => {
     res.status(500).send('Internal Server Error');
   }
 });
+
 app.get('/in', async (req, res) => {
   try {
     const nameData = await getNameData();
@@ -104,19 +107,9 @@ app.get('/in', async (req, res) => {
 app.post('/addName', async (req, res) => {
   try {
     await insertName(req.body);
-    res.redirect('/review');
+    res.redirect('/');
   } catch (error) {
     console.error('Error adding name:', error);
-    res.status(500).send('Internal Server Error');
-  }
-});
-
-app.get('/updateName', async (req, res) => {
-  try {
-    const nameToUpdate = await getNameById(req.query.devId);
-    res.render('/update', { pageTitle: 'Update Name Info', nameData: nameToUpdate, csrfToken: req.csrfToken() });
-  } catch (error) {
-    console.error('Error rendering update page:', error);
     res.status(500).send('Internal Server Error');
   }
 });
@@ -124,7 +117,7 @@ app.get('/updateName', async (req, res) => {
 app.post('/updateName', async (req, res) => {
   try {
     await updateName(req.body);
-    res.redirect('/review');
+    res.redirect('tp');
   } catch (error) {
     console.error('Error updating name:', error);
     res.status(500).send('Internal Server Error');
@@ -134,12 +127,13 @@ app.post('/updateName', async (req, res) => {
 app.post('/deleteName', async (req, res) => {
   try {
     await deleteName(req.body.devId);
-    res.redirect('/review');
+    res.redirect('tp');
   } catch (error) {
     console.error('Error deleting name:', error);
     res.status(500).send('Internal Server Error');
   }
 });
+
 // Login route
 app.get('/login', (req, res) => {
   res.render('login', { pageTitle: 'Login', csrfToken: req.csrfToken(), errorMessage: null });
@@ -179,21 +173,18 @@ app.post('/register', async (req, res) => {
 // review page
 app.get('/review', async (req, res) => {
   try {
-    const nameData = await getNameData(); // Fetch the data needed for the review
-    res.render('review', { 
-      nameData: nameData, // Pass the array of data to the template
-      csrfToken: req.csrfToken() 
-    });
+    const nameData = await getNameData();
+    res.render('review', { nameData, csrfToken: req.csrfToken() });
   } catch (error) {
     console.error('Error rendering review page:', error);
     res.status(500).send('Internal Server Error');
   }
 });
+
 app.post('/review', async (req, res) => {
   try {
-    // Process the submitted form data here if needed
-    // Then render the review.ejs template with the processed data
-    res.render('review', { /* Data to pass to the template */ });
+    const nameData = req.body;
+    res.render('review', { nameData });
   } catch (error) {
     console.error('Error processing form data:', error);
     res.status(500).send('Internal Server Error');
@@ -209,11 +200,6 @@ async function getNameData() {
 async function insertName(data) {
   const collection = client.db('aaaa').collection('aaaa');
   await collection.insertOne(data);
-}
-
-async function getNameById(id) {
-  const collection = client.db('aaaa').collection('aaaa');
-  return await collection.findOne({ _id: new ObjectId(id) });
 }
 
 async function updateName(data) {
