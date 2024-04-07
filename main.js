@@ -54,15 +54,22 @@ app.get('/', async (req, res) => {
   }
 });
 
-app.get('/tp', (req, res) => {
-  const data = {
-    phoneNumber: '123-456-7890',
-    email: 'example@example.com',
-    address: '123 Example St, City, Country',
-    supportEmail: 'support@example.com',
-    phoneNo: '987-654-3210'
-  };
-  res.render('tp', data);
+app.get('/tp', async (req, res) => {
+  try {
+    const nameData = await getNameData();
+    const data = {
+      phoneNumber: '123-456-7890',
+      email: 'example@example.com',
+      supportEmail: 'support@example.com',
+      phoneNo: '987-654-3210',
+      nameData: nameData,
+      csrfToken: req.csrfToken()
+    };
+    res.render('tp', data);
+  } catch (error) {
+    console.error('Error fetching name data:', error);
+    res.status(500).send('Internal Server Error');
+  }
 });
 
 app.get('/hous', async (req, res) => {
