@@ -75,6 +75,16 @@ app.get('/hous', async (req, res) => {
   }
 });
 
+app.get('/fh', async (req, res) => {
+  try {
+    const nameData = await getNameData();
+    res.render('fh', { nameData, csrfToken: req.csrfToken() });
+  } catch (error) {
+    console.error('Error rendering fh page:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
 app.post('/addName', async (req, res) => {
   try {
     await insertName(req.body);
